@@ -13,6 +13,18 @@ void ATankAIController::BeginPlay() {
 	else { UE_LOG(LogTemp, Warning, TEXT("AIController: PlayerTank, %s"), *PlayerTank->GetName()); }
 }
 
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	//TODO Move to the player
+
+	//Aim at the player
+	GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+
+	//FIRE
+
+}
+
 ATank* ATankAIController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
