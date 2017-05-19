@@ -2,9 +2,17 @@
 
 #pragma once
 
-#include "TankAimingComponent.h"
 #include "GameFramework/Pawn.h"
 #include "Tank.generated.h" // No include below this one!!
+
+
+// Foward declarations
+class UTankBarrel; 
+class UTankTurret;
+class UTankAimingComponent;
+class AProjectile;
+class UTankMovementComponent;
+
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -20,17 +28,30 @@ protected:
 	virtual void BeginPlay() override;
 
 	UTankAimingComponent* TankAimingComponent = nullptr;
+	UPROPERTY(BlueprintReadOnly) UTankMovementComponent* TankMovementComponent = nullptr;
 
 public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
-
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
 	void AimAt(FVector HitLocation);
 
-	UFUNCTION(BlueprintCallable, Category = Setup) void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
-	
-	
+	UFUNCTION(BlueprintCallable, Category = Setup) void SetBarrelReference(UTankBarrel* BarrelToSet);
+	UFUNCTION(BlueprintCallable, Category = Setup) void SetTurretReference(UTankTurret* TurretToSet);
+
+	UFUNCTION(BlueprintCallable) void Fire();
+
+private:
+	UPROPERTY(EditDefaultsOnly, Category = Firing) float LaunchSpeed = 100000; //1000 m/s TODO Find a default
+	UPROPERTY(EditDefaultsOnly, Category = Firing) float ReloadTimeInSeconds = 3;
+
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup) TSubclassOf<AProjectile> ProjectileBlueprint;
+
+
+	// use to know where the bullet needs to spawn
+	UTankBarrel* Barrel = nullptr;
+
+	double LastFireTime = 0;
+
 };

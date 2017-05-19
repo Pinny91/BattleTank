@@ -2,10 +2,14 @@
 
 #pragma once
 
-#include "Tank.h"
 
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h" //Always the last include
+
+
+
+class ATank; // Foward declaration
+
 
 /**
  * 
@@ -42,9 +46,9 @@ private:
 
 
 
-	UPROPERTY(EditAnywhere) float CrossHairXLocation = 0.5f;
-	UPROPERTY(EditAnywhere) float CrossHairYLocation = 0.3333f;
-	UPROPERTY(EditAnywhere) float LineTraceRange = 1000000.f; // in cm
+	UPROPERTY(EditDefaultsOnly) float CrossHairXLocation = 0.5f;
+	UPROPERTY(EditDefaultsOnly) float CrossHairYLocation = 0.3333f;
+	UPROPERTY(EditDefaultsOnly) float LineTraceRange = 1000000.f; // in cm
 
 	
 };
